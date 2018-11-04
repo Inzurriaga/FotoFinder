@@ -1,0 +1,196 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #c4b1b4;
+  display: grid;
+  grid-template-rows: 150px 500px 1fr;
+  grid-template-areas: 
+    "header"
+    "inputs"
+    "post";
+}
+
+header {
+  grid-area: header;
+  background-color: #412935;
+  padding: 10px 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #FFFFFF;
+  display: inline-block;
+}
+
+img {
+  width: 60px;
+}
+
+header input {
+  display: inline-block;
+  height: 45px;
+  font-size: 1.8em;
+  border: 2px solid #c4b1b4;
+  border-radius: 5px 0px 0px 5px;
+}
+
+form {
+  margin: 10px auto;
+  width: 700px;
+}
+
+label {
+  color: #b19da1;
+  font-size: 1.5em;
+  line-height: 40px;
+}
+
+form input {
+  width: 100%;
+  height: 60px;
+  border: none;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #5f4347;
+  color: #FFFFFF;
+  border: none;
+  height: 60px;
+  width: 45%;
+}
+
+button:hover, #input-file-button:hover {
+  background-color: #968183;
+}
+
+div {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#search {
+  margin: 33.5px;
+  float: right;
+  display: flex;
+}
+
+#search img {
+  width: 45px;
+  height: 45px;
+  background-color: #c4b1b4;
+  border-radius: 0px 5px 5px 0px;
+  padding: 10px;
+}
+
+#inputs-section {
+  grid-area: inputs;
+  background-color: #412935;
+}
+
+#choose-file-button {
+  width: 100%;
+  margin-top: 30px;
+  background-color: #5f4347;
+  color: #FFFFFF;
+  border: none;
+  height: 60px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#input-file-button {
+  display: inline-block;
+  height: 60px;
+  width: 100%;
+  background-color: #5f4347;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+#post-section {
+  grid-area: post;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-gap: 30px;
+}
+
+/* this is for the placeholder */
+.placeholder {
+  width: 282px;
+  display: grid;
+  grid-template-rows: 50px 169px 104px 68px;
+  grid-template-areas:
+    "title"
+    "image"
+    "body"
+    "bottom";
+  margin: 20px auto;
+  background-color: #FFFFFF;
+  border: 2px solid #938284;
+
+}
+
+#placeholder h2 {
+  margin: 12px;
+}
+
+
+p {
+  margin: 0px;
+  font-size: 22px;
+  padding: 14px;
+  font-weight: bold;
+}
+
+#middle-article {
+  margin: 0px;
+}
+
+#bottom-article {
+  margin: 0px;
+  height: 100%;
+  background-color: #412935; 
+}
+
+#post-image {
+  width: 100%;
+  height: 145px;
+}
+
+
+.post-button {
+  width: 40px;
+}
+/* this is the bottom the placeholder */
+
+@media screen and (max-width: 800px) {
+  body {
+  grid-template-rows: 200px 500px 1fr;
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  form {
+    width: 87.5%;
+  }
+
+  #search {
+    margin: 0px 100px auto 100px;
+  }
+
+}
