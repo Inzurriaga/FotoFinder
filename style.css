@@ -20,6 +20,7 @@ header {
 }
 
 h1 {
+  margin: 0.67em 0px 0.67em 30px;
   font-size: 2.5em;
   color: #FFFFFF;
   display: inline-block;
@@ -147,10 +148,22 @@ input[type="file"] {
 
 
 p {
+  width: 275px;
   margin: 0px;
   font-size: 22px;
-  padding: 14px;
+  padding: 2px 14px;  
+  word-wrap: break-word;
+  overflow: scroll;
+  hyphens: auto;
   font-weight: bold;
+}
+
+h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  padding: 12px;
 }
 
 #middle-article {
@@ -160,11 +173,13 @@ p {
 #bottom-article {
   margin: 0px;
   height: 100%;
+  padding: 0px 20px;
   background-color: #412935; 
 }
 
 #post-image {
-  width: 100%;
+  margin: auto;
+  width: auto;
   height: 145px;
 }
 
@@ -174,7 +189,7 @@ p {
 }
 /* this is the bottom the placeholder */
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 829px) {
   body {
   grid-template-rows: 200px 500px 1fr;
   }
