@@ -1,5 +1,5 @@
 class Photo {
-  constructor(title, file, caption) {
+  constructor(title, file, caption, id) {
     this.id = new Date();
     this.title = title;
     this.file = file;
@@ -11,7 +11,8 @@ class Photo {
     localStorage.setItem(this.id, postString);
   }
   deleteFromStorage() {
-    localStorage.removeItem(this.id);
+    alert("delete works")
+    localStorage.removeItem("id", this.id);
   }
   updatePhoto() {
 

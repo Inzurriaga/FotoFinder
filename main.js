@@ -1,29 +1,49 @@
 window.URL = window.URL || window.webkitURL || window.mozURL;
 var file = document.querySelector("#choose-file-button");
-var DeletePost = document.querySelector("#article-button-delete");
-var favoritePost = document.querySelector("#article-button-favorite");
 var titleInput = document.querySelector("#post-title");
 var captionInput = document.querySelector("#post-caption");
-var favoriteButton = document.querySelector("#view-favorite-button");
-var submitButton = document.querySelector("#add-album-button");
+var viewFavoriteButton = document.querySelector("#view-favorite-button");
 var searchInput = document.querySelector("#search");
 var postSection = document.querySelector("#post-section");
+var reader = new FileReader();
 var array = [];
 
-submitButton.addEventListener("click", createPost);
+document.querySelector("#add-album-button").addEventListener("click", createElement);
+document.addEventListener("DOMContentLoaded", reloadPost)
 // favoriteButton.addeventListener("click", changefavorite);
 // contentedit.addeventListener("click", editPost)
+function itworks() {
+  alert("hello");
+}
+
+function createElement(e) {
+  if (file.files[0]) {
+    reader.readAsDataURL(file.files[0]); 
+    reader.onload = createPost
+  }
+  e.preventDefault();
+}
 
 function createPost(e) {
-  var fileBlob = URL.createObjectURL(file.files[0])
-  console.log("image url " + fileBlob);
-  var post = new Photo(titleInput.value, fileBlob, captionInput.value);
+  var post = new Photo(titleInput.value, e.target.result, captionInput.value);
+  console.log(reader.result)
   array.push(post);
   post.saveToStorage();
   postHTML(post);
   clearInputs();
   console.log("createPost works");
   e.preventDefault();
+}
+
+function reloadPost() {
+  for(var key in localStorage) {
+    if(localStorage.hasOwnProperty(key)) {
+      var parsedPost = JSON.parse(localStorage.getItem(key));
+      var post = new Photo(parsedPost.title, parsedPost.file, parsedPost.caption, parsedPost.id);
+      array.push(post);
+      postHTML(parsedPost);
+    }
+  }
 }
 
 // function deletePost() {
@@ -64,6 +84,8 @@ function postHTML(post) {
       </div>
     </article>`;
     postSection.insertAdjacentHTML("afterbegin", htmlcontent);
+    document.querySelector("#article-button-delete").addEventListener("click", itworks);
+    document.querySelector("#article-button-favorite").addEventListener("click", itworks);
     console.log("postHTML works");
 }
 
