@@ -1,20 +1,25 @@
 class Photo {
   constructor(title, file, caption, id) {
-    this.id = new Date();
+    this.id = id || "id" + Date.now();
     this.title = title;
     this.file = file;
     this.caption = caption;
     this.favorite = false;
   }
   saveToStorage() {
-    var postString = JSON.stringify(this);
-    localStorage.setItem(this.id, postString);
+    localStorage.setItem(this.id, JSON.stringify(this));
   }
   deleteFromStorage() {
-    alert("delete works")
-    localStorage.removeItem("id", this.id);
+    localStorage.removeItem(this.id);
   }
-  updatePhoto() {
+  updatePhoto(newText, type) {
+    if (type === 'title') {
+      this.title = newText;
+    } else if (type === 'caption') {
+      this.caption = newText;
+    }
+  }
+  updateFavorite() {
 
   }
 }
