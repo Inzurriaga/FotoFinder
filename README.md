@@ -2,7 +2,7 @@
 
 ## Original photo
 
-![](orginal.png)
+![](original.png)
 
 ## Screenshot of my site
 
