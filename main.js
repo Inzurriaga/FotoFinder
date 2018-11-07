@@ -20,6 +20,13 @@ document.querySelector("#post-section").addEventListener("click", event => {
     favoriteButton();
 }
 })
+document.querySelector("#post-section").addEventListener("dblclick", event => {
+  if (event.target.classList.contains("post-title")) {
+    editTitleText(event);
+  }else if (event.target.classList.contains("post-caption")) {
+    editCaptionText(event);
+}
+})
 
 function createElement(e) {
   e.preventDefault();
@@ -144,18 +151,13 @@ function postHTML(post, favorite) {
         <p class="post-caption ediable-text" contentEditable = "false">${post.caption}</p>
       </div>
       <div id="bottom-article">
-        <img class="article-button-delete" class="post-button" src="icons/delete.svg">
-        <img class="article-button-favorite" class="post-button" src="${favoritesvg}">
+        <img class="article-button-delete post-button" src="icons/delete.svg">
+        <img class="article-button-favorite post-button" src="${favoritesvg}">
       </div>
     </article>`;
     document.querySelector("#post-section").insertAdjacentHTML("afterbegin", htmlcontent);
     console.log("postHTML works");
 }
-
-
-//========================
-
-document.querySelector("#post-section").addEventListener('dblclick', updateCard);
 
 function editText() {
  event.target.contentEditable = true;
@@ -165,7 +167,44 @@ function setUneditable() {
  event.target.contentEditable = false;
 };
 
-function updateCard(event) {
+function editTitleText(event) {
+ if (event.target.classList.contains('ediable-text')) {
+   editText();
+   document.body.addEventListener('keypress', saveTitleOnEnter);
+   event.target.addEventListener('blur', saveTitleOnClick);
+ }
+};
+
+function updatetitle() {
+   var index = findIndexNumber(event.target.parentElement.dataset.id);
+   if (event.target.classList.contains('post-title')) {
+      console.log(array[index])
+     array[index].updatePhoto(event.target.innerText, 'title');
+   } else {
+    console.log("caption got update")
+     array[index].updatePhoto(event.target.innerText, 'caption');
+   };
+
+   array[index].saveToStorage();
+  };
+
+function saveTitleOnClick(event) {
+ updatetitle();
+ setUneditable();
+ document.body.removeEventListener('keypress', saveTextOnEnter);
+ event.target.removeEventListener('blur', saveTextOnClick);
+};
+
+function saveTitleOnEnter(event) {
+ if (event.code === 'Enter') {
+   updatetitle();
+   setUneditable();
+   document.body.removeEventListener('keypress', saveTextOnEnter);
+   event.target.removeEventListener('blur', saveTextOnClick);
+ }
+};
+
+function editCaptionText(event) {
  if (event.target.classList.contains('ediable-text')) {
    editText();
    document.body.addEventListener('keypress', saveTextOnEnter);
@@ -173,7 +212,7 @@ function updateCard(event) {
  }
 };
 
-function updateIdea() {
+function updateCaption() {
    var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
    if (event.target.classList.contains('post-title')) {
       console.log(array[index])
@@ -187,7 +226,7 @@ function updateIdea() {
   };
 
 function saveTextOnClick(event) {
- updateIdea();
+ updateCaption();
  setUneditable();
  document.body.removeEventListener('keypress', saveTextOnEnter);
  event.target.removeEventListener('blur', saveTextOnClick);
@@ -195,18 +234,24 @@ function saveTextOnClick(event) {
 
 function saveTextOnEnter(event) {
  if (event.code === 'Enter') {
-   updateIdea();
+   updateCaption();
    setUneditable();
    document.body.removeEventListener('keypress', saveTextOnEnter);
    event.target.removeEventListener('blur', saveTextOnClick);
  }
 };
-
-// ================================================
-
-
-
-
+//=================================================
+function favoriteNumCheck() {
+  var favoriteAmount = 0;
+  array.forEach(function(check){
+    if(check.favorite === true) {
+      console.log(check.favorite)
+      favoriteAmount++
+      return document.querySelector("#favorite-num").innerText = favoriteAmount;
+    }
+    console.log(favoriteAmount)
+  })
+}
 
 
 

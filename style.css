@@ -178,6 +178,8 @@ h2 {
 }
 
 .placeholder {  
+  -webkit-animation: swing 1s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  animation: swing 1s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
   background-color: #FFFFFF;
   border: 2px solid #938284;
   display: grid;
@@ -191,9 +193,8 @@ h2 {
     "bottom";
 }
 
-.article-button-delete
 .post-button {
-  width: 40px;
+  width: 35px;
 }
 
 @media screen and (max-width: 829px) {
@@ -215,4 +216,37 @@ h2 {
     margin: 0px 100px auto 100px;
   }
 
+}
+
+@-webkit-keyframes swing {
+  0% {
+    -webkit-transform: rotateX(70deg);
+            transform: rotateX(70deg);
+    -webkit-transform-origin: top;
+            transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    -webkit-transform-origin: top;
+            transform-origin: top;
+    opacity: 1;
+  }
+}
+@keyframes swing {
+  0% {
+    -webkit-transform: rotateX(70deg);
+            transform: rotateX(70deg);
+    -webkit-transform-origin: top;
+            transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    -webkit-transform-origin: top;
+            transform-origin: top;
+    opacity: 1;
+  }
 }
