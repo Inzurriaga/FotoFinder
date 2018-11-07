@@ -1,10 +1,10 @@
 class Photo {
-  constructor(title, file, caption, id) {
+  constructor(title, file, caption, id, favorite) {
     this.id = id || "id" + Date.now();
     this.title = title;
     this.file = file;
     this.caption = caption;
-    this.favorite = false;
+    this.favorite = favorite || false;
   }
   saveToStorage() {
     localStorage.setItem(this.id, JSON.stringify(this));
