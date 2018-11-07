@@ -1,7 +1,6 @@
 var file                = document.querySelector("#choose-file-button");
 var titleInput          = document.querySelector("#post-title");
 var captionInput        = document.querySelector("#post-caption");
-var viewFavoriteButton  = document.querySelector("#view-favorite-button");
 var searchInput         = document.querySelector("#search-input");
 var post                = document.querySelector("article");
 var reader              = new FileReader();
@@ -243,7 +242,7 @@ function favoriteNumCheck(checkagain) {
 }
 
 
-viewFavoriteButton.addEventListener("click", showFavorite)
+document.querySelector("#view-favorite-button").addEventListener("click", showFavorite)
 function showFavorite(e) {
   e.preventDefault()
   console.log("its passing the first")
