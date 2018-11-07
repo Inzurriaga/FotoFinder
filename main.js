@@ -39,12 +39,10 @@ function createElement(e) {
 function createPost(e) {
   e.preventDefault();
   var post = new Photo(titleInput.value, e.target.result, captionInput.value);
-  console.log(reader.result)
   array.push(post);
   post.saveToStorage();
   postHTML(post);
   clearInputs();
-  console.log("createPost works");
   updateShownArray()
 }
 
@@ -52,7 +50,7 @@ function reloadPost() {
   for(var key in localStorage) {
     if(localStorage.hasOwnProperty(key)) {
       var parsedPost = JSON.parse(localStorage.getItem(key));
-      var post = new Photo(parsedPost.title, parsedPost.file, parsedPost.caption, parsedPost.id);
+      var post = new Photo(parsedPost.title, parsedPost.file, parsedPost.caption, parsedPost.id, parsedPost.favorite);
       array.push(post);
       postHTML(parsedPost);
     }
@@ -62,7 +60,6 @@ function reloadPost() {
 
 function deletePost(e) {
   var index = findIndexNumber(e.target.parentElement.parentElement.dataset.id);
-  console.log(index)
   array[index].deleteFromStorage();
   array.splice(index, 1);
   e.target.parentElement.parentElement.remove();
@@ -80,7 +77,6 @@ function findIndexNumber(objId) {
 function clearInputs() {
   titleInput.value = "";
   captionInput.value = "";
-  console.log("clearInputs works")
 }
 
 
@@ -123,9 +119,7 @@ function updateShownArray() {
 };
 
 function favoriteButton() {
-  console.log("favorite")
   var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
-  console.log(array[index].favorite)
   if (array[index].favorite === false) {
     array[index].favorite = true;
     event.target.src = "icons/favorite-active.svg";
@@ -134,17 +128,19 @@ function favoriteButton() {
     event.target.src = "icons/favorite.svg";
   }
   array[index].saveToStorage();
+  favoriteNumCheck();
 };
 
 function postHTML(post, favorite) {
   var favoritesvg;
   if(post.favorite == true){
     favoritesvg = "icons/favorite-active.svg"
+    favoriteNumCheck(true);
   } else {
     favoritesvg = "icons/favorite.svg"
   }
   var htmlcontent = `
-    <article class="placeholder" data-id=${post.id}>
+    <article class="placeholder" data-id="${post.id}">
       <h2 class="post-title ediable-text" contentEditable = "false">${post.title}</h2>
         <img id="post-image" src="${post.file}">
       <div id="middle-article">
@@ -156,7 +152,6 @@ function postHTML(post, favorite) {
       </div>
     </article>`;
     document.querySelector("#post-section").insertAdjacentHTML("afterbegin", htmlcontent);
-    console.log("postHTML works");
 }
 
 function editText() {
@@ -178,10 +173,8 @@ function editTitleText(event) {
 function updatetitle() {
    var index = findIndexNumber(event.target.parentElement.dataset.id);
    if (event.target.classList.contains('post-title')) {
-      console.log(array[index])
      array[index].updatePhoto(event.target.innerText, 'title');
    } else {
-    console.log("caption got update")
      array[index].updatePhoto(event.target.innerText, 'caption');
    };
 
@@ -215,10 +208,8 @@ function editCaptionText(event) {
 function updateCaption() {
    var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
    if (event.target.classList.contains('post-title')) {
-      console.log(array[index])
      array[index].updatePhoto(event.target.innerText, 'title');
    } else {
-    console.log("caption got update")
      array[index].updatePhoto(event.target.innerText, 'caption');
    };
 
@@ -240,23 +231,34 @@ function saveTextOnEnter(event) {
    event.target.removeEventListener('blur', saveTextOnClick);
  }
 };
-//=================================================
-function favoriteNumCheck() {
+
+function favoriteNumCheck(checkagain) {
   var favoriteAmount = 0;
   array.forEach(function(check){
-    if(check.favorite === true) {
-      console.log(check.favorite)
+    if(check.favorite == true || checkagain) {
       favoriteAmount++
       return document.querySelector("#favorite-num").innerText = favoriteAmount;
     }
-    console.log(favoriteAmount)
   })
 }
 
 
+viewFavoriteButton.addEventListener("click", showFavorite)
+function showFavorite(e) {
+  e.preventDefault()
+  console.log("its passing the first")
+  var  favoritecheck = document.querySelectorAll("img")
+  favoritecheck.forEach(function(check){
+    if(check.src === "icons/favorite-active.svg"){
+      console.log("this is true")
+      check.parentElement.style.display = "grid";
+    }else {
+      console.log("this is false")
+      check.parentElement.style.display = "none";
+    }
+  })
 
-
-
+}
 
 
 
