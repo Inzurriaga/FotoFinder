@@ -19,7 +19,4 @@ class Photo {
       this.caption = newText;
     }
   }
-  updateFavorite() {
-
-  }
 }

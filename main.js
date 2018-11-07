@@ -16,7 +16,9 @@ searchInput.addEventListener("keyup", liveSearch);
 document.querySelector("#post-section").addEventListener("click", event => {
   if (event.target.classList.contains("article-button-delete")) {
     deletePost(event);
-  }
+  }else if (event.target.classList.contains("article-button-favorite")) {
+    favoriteButton();
+}
 })
 
 function createElement(e) {
@@ -56,7 +58,8 @@ function deletePost(e) {
   console.log(index)
   array[index].deleteFromStorage();
   array.splice(index, 1);
-  e.target.parentElement.parentElement.remove(); 
+  e.target.parentElement.parentElement.remove();
+  updateShownArray();
 };
 
 function findIndexNumber(objId) {
@@ -112,7 +115,27 @@ function updateShownArray() {
   });
 };
 
-function postHTML(post) {
+function favoriteButton() {
+  console.log("favorite")
+  var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
+  console.log(array[index].favorite)
+  if (array[index].favorite === false) {
+    array[index].favorite = true;
+    event.target.src = "icons/favorite-active.svg";
+  } else{
+    array[index].favorite = false;
+    event.target.src = "icons/favorite.svg";
+  }
+  array[index].saveToStorage();
+};
+
+function postHTML(post, favorite) {
+  var favoritesvg;
+  if(post.favorite == true){
+    favoritesvg = "icons/favorite-active.svg"
+  } else {
+    favoritesvg = "icons/favorite.svg"
+  }
   var htmlcontent = `
     <article class="placeholder" data-id=${post.id}>
       <h2 class="post-title ediable-text" contentEditable = "false">${post.title}</h2>
@@ -122,7 +145,7 @@ function postHTML(post) {
       </div>
       <div id="bottom-article">
         <img class="article-button-delete" class="post-button" src="icons/delete.svg">
-        <img class="article-button-favorite" class="post-button" src="icons/favorite.svg">
+        <img class="article-button-favorite" class="post-button" src="${favoritesvg}">
       </div>
     </article>`;
     document.querySelector("#post-section").insertAdjacentHTML("afterbegin", htmlcontent);
@@ -180,7 +203,6 @@ function saveTextOnEnter(event) {
 };
 
 // ================================================
-
 
 
 
