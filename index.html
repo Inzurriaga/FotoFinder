@@ -12,10 +12,10 @@
 </head>
 <body>
   <header>
-    <h1>FOTO <img src="icons/foto-finder-logo.svg"> FINDER</h1>
+    <h1>FOTO <img src="icons/foto-finder-logo.svg" alt="logo"> FINDER</h1>
     <div id="search">
       <input type="text" id="search-input" placeholder="Search">
-      <img src="icons/search.svg">
+      <img src="icons/search.svg" alt="search">
     </div>
   </header>
   <section id="inputs-section">
@@ -24,8 +24,7 @@
       <input id="post-title">
       <label>Caption</label>
       <input id="post-caption">
-      <label id="input-file-button">
-        choose file
+      <label id="input-file-button">choose file
         <input type="file" id="choose-file-button" accept="image/png, image/jpg, image/gif">
       </label>
       <div>
@@ -40,7 +39,10 @@
 
     <!--- card holder -->
   </section>
-  <script type="text/javascript" src="photo.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <section id="show-button">
+    <button id="the-show-button">show more</button>
+  </section>
+  <script src="photo.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
