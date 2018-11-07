@@ -13,9 +13,9 @@ class Photo {
     localStorage.removeItem(this.id);
   }
   updatePhoto(newText, type) {
-    if (type === 'title') {
+    if (type === "title") {
       this.title = newText;
-    } else if (type === 'caption') {
+    } else if (type === "caption") {
       this.caption = newText;
     }
   }

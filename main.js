@@ -5,19 +5,19 @@ var viewFavoriteButton  = document.querySelector("#view-favorite-button");
 var searchInput         = document.querySelector("#search-input");
 var post                = document.querySelector("article");
 var reader              = new FileReader();
+var numCounter          = 10;
+var tenPost             = true;
 var array               = [];
 
+document.querySelector('#the-show-button').addEventListener('click', showthepost);
 document.querySelector("#add-album-button").addEventListener("click", createElement);
 document.addEventListener("DOMContentLoaded", reloadPost);
+searchInput.addEventListener("keyup", liveSearch);
 document.querySelector("#post-section").addEventListener("click", event => {
   if (event.target.classList.contains("article-button-delete")) {
     deletePost(event);
   }
 })
-// document.querySelector("#article-button-favorite").addEventListener("click", favoritePost);
-
-searchInput.addEventListener("keyup", liveSearch);
-// contentedit.addEventListener("click", editPost)
 
 function createElement(e) {
   e.preventDefault();
@@ -36,6 +36,7 @@ function createPost(e) {
   postHTML(post);
   clearInputs();
   console.log("createPost works");
+  updateShownArray()
 }
 
 function reloadPost() {
@@ -47,6 +48,7 @@ function reloadPost() {
       postHTML(parsedPost);
     }
   }
+  updateShownArray()
 }
 
 function deletePost(e) {
@@ -85,13 +87,38 @@ function liveSearch() {
   })
 };
 
+function showthepost() {
+  if (tenPost === true) {
+  numCounter = array.length;
+  tenPost = false;
+  document.querySelector("#the-show-button").innerText = "Show less";
+  updateShownArray();
+}else {
+  numCounter = 10;
+  tenPost = true;
+  document.querySelector("#the-show-button").innerText = "Show More";
+  updateShownArray();
+}
+};
+
+function updateShownArray() {
+  var postArray = Array.from(document.querySelectorAll('.placeholder'));
+  postArray.forEach(function(post, index) {
+    if(index < numCounter) {
+      post.style.display = 'grid';
+    } else {
+      post.style.display = 'none';
+    }
+  });
+};
+
 function postHTML(post) {
   var htmlcontent = `
     <article class="placeholder" data-id=${post.id}>
       <h2 class="post-title ediable-text" contentEditable = "false">${post.title}</h2>
         <img id="post-image" src="${post.file}">
       <div id="middle-article">
-        <p class="ediable-text" contentEditable = "false">${post.caption}</p>
+        <p class="post-caption ediable-text" contentEditable = "false">${post.caption}</p>
       </div>
       <div id="bottom-article">
         <img class="article-button-delete" class="post-button" src="icons/delete.svg">
@@ -103,62 +130,67 @@ function postHTML(post) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//========================
 
 document.querySelector("#post-section").addEventListener('dblclick', updateCard);
 
-
 function editText() {
-  event.target.contentEditable = true;
+ event.target.contentEditable = true;
 };
 
 function setUneditable() {
-  event.target.contentEditable = false;
+ event.target.contentEditable = false;
 };
 
 function updateCard(event) {
-  if (event.target.classList.contains('ediable-text')) {
-    editText();
-    document.body.addEventListener('keypress', saveTextOnEnter);
-    event.target.addEventListener('blur', saveTextOnClick);
-  }
+ if (event.target.classList.contains('ediable-text')) {
+   editText();
+   document.body.addEventListener('keypress', saveTextOnEnter);
+   event.target.addEventListener('blur', saveTextOnClick);
+ }
 };
 
 function updateIdea() {
-  var index = findIndexNumber(event.target.parentElement.dataset.id);
-  console.log(index +" this is to see if the update works")
-  if (event.target.classList.contains('post-title')) {
-    array[index].updatePhoto(event.target.innerText, 'title');
-  } else {
-    array[index].updatePhoto(event.target.innerText, 'caption');
+   var index = findIndexNumber(event.target.parentElement.parentElement.dataset.id);
+   if (event.target.classList.contains('post-title')) {
+      console.log(array[index])
+     array[index].updatePhoto(event.target.innerText, 'title');
+   } else {
+    console.log("caption got update")
+     array[index].updatePhoto(event.target.innerText, 'caption');
+   };
+
+   array[index].saveToStorage();
   };
 
-  array[index].saveToStorage();
-};
-
 function saveTextOnClick(event) {
-  updateIdea();    
-  setUneditable(); 
-  document.body.removeEventListener('keypress', saveTextOnEnter);
-  event.target.removeEventListener('blur', saveTextOnClick);
+ updateIdea();
+ setUneditable();
+ document.body.removeEventListener('keypress', saveTextOnEnter);
+ event.target.removeEventListener('blur', saveTextOnClick);
 };
 
 function saveTextOnEnter(event) {
-  if (event.code === 'Enter') {
-    updateIdea();    
-    setUneditable(); 
-    document.body.removeEventListener('keypress', saveTextOnEnter);
-    event.target.removeEventListener('blur', saveTextOnClick);
-  }
-}; 
+ if (event.code === 'Enter') {
+   updateIdea();
+   setUneditable();
+   document.body.removeEventListener('keypress', saveTextOnEnter);
+   event.target.removeEventListener('blur', saveTextOnClick);
+ }
+};
+
+// ================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
